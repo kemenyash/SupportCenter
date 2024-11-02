@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using Schemas.Entities;
 using System.Text;
+using System.Xml.Linq;
 
 var hubUrl = $"https://localhost:7183/customerhub?userId={GenerateRandomString(10)}";
 int ticketsId = 0;
@@ -22,12 +23,10 @@ connection.On<Customer>("ReceiveCustomerProfile", customer =>
     customerProfile = customer;
     Console.WriteLine($"\r\nYou are log in: \r\nUsername: {customer.Name}\r\nEmail: {customer.Email}\r\nUser ID: {customer.UserId}");
 });
-
 try
 {
     await connection.StartAsync();
     Console.WriteLine("Connected to CustomerHub.");
-
     Console.WriteLine("Commands:");
     Console.WriteLine("1. Push 'Insert' for creating ticket");
     Console.WriteLine("2. Push 'Enter' for exit...");

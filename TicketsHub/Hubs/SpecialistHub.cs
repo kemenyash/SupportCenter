@@ -5,10 +5,10 @@ using TicketsHub.Services;
 
 namespace TicketsHub.Hubs
 {
-    public class SpecialistHub : BaseHub
+    public class SpecialistHub : Hub
     {
 
-        public async Task NotifySpecialist(string userId, Ticket ticket)
+        public async Task ReceiveSpecialistAssigned(string userId, Ticket ticket)
         {
             await Clients.Group(userId).SendAsync("ReceiveSpecialistAssigned", ticket);
         }

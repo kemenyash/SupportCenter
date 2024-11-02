@@ -1,6 +1,7 @@
 ﻿using Schemas.Entities;
 using Microsoft.AspNetCore.SignalR.Client;
 using System.Text;
+using System.Net.Sockets;
 
 var hubUrl = $"https://localhost:7183/specialisthub?userId={GenerateRandomString(10)}";
 Specialist specialistProfile = null;
@@ -9,10 +10,6 @@ var connection = new HubConnectionBuilder()
                 .WithUrl(hubUrl)
                 .Build();
 
-connection.On<Report>("ReceiveReport", report =>
-{
-    Console.WriteLine($"Received report: {report.Title}");
-});
 
 connection.On<Specialist>("ReceiveSpecialistProfile", specialist =>
 {
@@ -30,7 +27,7 @@ connection.On<Ticket>("ReceiveSpecialistAssigned", ticket =>
 try
 {
     await connection.StartAsync();
-    Console.WriteLine("Connected to CustomerHub.");
+    Console.WriteLine("Connected to SpecialistHub.");
 
     Console.WriteLine("Commands:");
     Console.WriteLine("1. Push 'Insert' for creating comment for ticket");
